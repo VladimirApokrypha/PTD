@@ -1,0 +1,44 @@
+C:\Users\Владимир\source\repos\PTDProject\DomainPTD\bin\Debug\DomainPTD.dll
+C:\Users\Владимир\source\repos\PTDProject\DomainPTD\bin\Debug\DomainPTD.pdb
+C:\Users\Владимир\source\repos\PTDProject\DomainPTD\obj\Debug\DomainPTD.csprojResolveAssemblyReference.cache
+C:\Users\Владимир\source\repos\PTDProject\DomainPTD\obj\Debug\DomainPTD.csproj.CoreCompileInputs.cache
+C:\Users\Владимир\source\repos\PTDProject\DomainPTD\obj\Debug\DomainPTD.dll
+C:\Users\Владимир\source\repos\PTDProject\DomainPTD\obj\Debug\DomainPTD.pdb
+C:\Users\Владимир\source\repos\PTDProject\DomainPTD\bin\Debug\DomainPTD.dll.config
+C:\Users\Владимир\source\repos\PTDProject\DomainPTD\bin\Debug\EntityFramework.dll
+C:\Users\Владимир\source\repos\PTDProject\DomainPTD\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Владимир\source\repos\PTDProject\DomainPTD\bin\Debug\EntityFramework.xml
+C:\Users\Владимир\source\repos\PTDProject\DomainPTD\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Владимир\Documents\PTD\DomainPTD\bin\Debug\DomainPTD.dll.config
+C:\Users\Владимир\Documents\PTD\DomainPTD\bin\Debug\DomainPTD.dll
+C:\Users\Владимир\Documents\PTD\DomainPTD\bin\Debug\DomainPTD.pdb
+C:\Users\Владимир\Documents\PTD\DomainPTD\bin\Debug\EntityFramework.dll
+C:\Users\Владимир\Documents\PTD\DomainPTD\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Владимир\Documents\PTD\DomainPTD\bin\Debug\EntityFramework.xml
+C:\Users\Владимир\Documents\PTD\DomainPTD\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Владимир\Documents\PTD\DomainPTD\obj\Debug\DomainPTD.csprojResolveAssemblyReference.cache
+C:\Users\Владимир\Documents\PTD\DomainPTD\obj\Debug\DomainPTD.csproj.CoreCompileInputs.cache
+C:\Users\Владимир\Documents\PTD\DomainPTD\obj\Debug\DomainPTD.dll
+C:\Users\Владимир\Documents\PTD\DomainPTD\obj\Debug\DomainPTD.pdb
+C:\Users\Heln\Desktop\PTD\DomainPTD\bin\Debug\DomainPTD.dll.config
+C:\Users\Heln\Desktop\PTD\DomainPTD\bin\Debug\DomainPTD.dll
+C:\Users\Heln\Desktop\PTD\DomainPTD\bin\Debug\DomainPTD.pdb
+C:\Users\Heln\Desktop\PTD\DomainPTD\bin\Debug\EntityFramework.dll
+C:\Users\Heln\Desktop\PTD\DomainPTD\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Heln\Desktop\PTD\DomainPTD\bin\Debug\EntityFramework.xml
+C:\Users\Heln\Desktop\PTD\DomainPTD\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Heln\Desktop\PTD\DomainPTD\obj\Debug\DomainPTD.csprojResolveAssemblyReference.cache
+C:\Users\Heln\Desktop\PTD\DomainPTD\obj\Debug\DomainPTD.csproj.CoreCompileInputs.cache
+C:\Users\Heln\Desktop\PTD\DomainPTD\obj\Debug\DomainPTD.dll
+C:\Users\Heln\Desktop\PTD\DomainPTD\obj\Debug\DomainPTD.pdb
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\bin\Debug\DomainPTD.dll.config
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\bin\Debug\DomainPTD.dll
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\bin\Debug\DomainPTD.pdb
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\bin\Debug\EntityFramework.dll
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\bin\Debug\EntityFramework.xml
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\obj\Debug\DomainPTD.csprojResolveAssemblyReference.cache
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\obj\Debug\DomainPTD.csproj.CoreCompileInputs.cache
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\obj\Debug\DomainPTD.dll
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\obj\Debug\DomainPTD.pdb
