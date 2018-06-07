@@ -42,3 +42,14 @@ C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\obj\Debug\
 C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\obj\Debug\DomainPTD.csproj.CoreCompileInputs.cache
 C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\obj\Debug\DomainPTD.dll
 C:\Users\Андрей\Desktop\Новая папка (2)\PTD\DomainPTD\obj\Debug\DomainPTD.pdb
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD-2\DomainPTD\obj\Debug\DomainPTD.csprojResolveAssemblyReference.cache
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD-2\DomainPTD\obj\Debug\DomainPTD.csproj.CoreCompileInputs.cache
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD-2\DomainPTD\obj\Debug\DomainPTD.dll
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD-2\DomainPTD\obj\Debug\DomainPTD.pdb
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD-2\DomainPTD\bin\Debug\DomainPTD.dll.config
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD-2\DomainPTD\bin\Debug\DomainPTD.dll
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD-2\DomainPTD\bin\Debug\DomainPTD.pdb
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD-2\DomainPTD\bin\Debug\EntityFramework.dll
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD-2\DomainPTD\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD-2\DomainPTD\bin\Debug\EntityFramework.xml
+C:\Users\Андрей\Desktop\Новая папка (2)\PTD-2\DomainPTD\bin\Debug\EntityFramework.SqlServer.xml

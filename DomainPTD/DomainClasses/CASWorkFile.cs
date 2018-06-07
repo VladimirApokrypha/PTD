@@ -10,16 +10,16 @@ namespace DomainPTD.DomainClasses
     /// <summary>
     /// класс описывающий файл соотношения генподрядчика и субподрядчиков
     /// </summary>
-    public class CASWorkFile : IWorkFile
-    {
-        /// <summary>
-        /// путь к файлу
-        /// </summary>
-        public string Path { get; set; }
-        /// <summary>
-        /// список всех работ
-        /// </summary>
-        public List<Work> WorkList { get; set; }
-            = new List<Work>();
-    }
+    //public class CASWorkFile : IWorkFile
+    //{
+    //    /// <summary>
+    //    /// путь к файлу
+    //    /// </summary>
+    //    public string Path { get; set; }
+    //    /// <summary>
+    //    /// список всех работ
+    //    /// </summary>
+    //    public List<Work> WorkList { get; set; }
+    //        = new List<Work>();
+    //}
 }

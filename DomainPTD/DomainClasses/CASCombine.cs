@@ -7,7 +7,7 @@ using DomainPTD.DomainInterfaces;
 
 namespace DomainPTD.DomainClasses
 {
-    class CASCombine : IWorkFile
+   public class CASCombine : IWorkFile
     {
         public string Path
         {

@@ -23,7 +23,7 @@ namespace FuncionalPTD.FunctionalClasses
         public Dictionary<string, MakeFunction> TypeFileList { get; set; }
             = new Dictionary<string, MakeFunction>();
 
-        public IWorkFile MakeFile(List<IWorkFile> workFileList)
+        public IWorkFile MakeFile(List<IWorkFile> workFileList, string path)
         {
             List<List<Work>> allWorks = new List<List<Work>>();
             foreach (var temp in workFileList)
@@ -62,6 +62,30 @@ namespace FuncionalPTD.FunctionalClasses
             }
 
             return works;
+        }
+
+
+
+
+
+        public void loop(Excel.Application TempImportExcel, List<Work> work,List<List<Work>> SubcontrWork)
+        {
+            for (int i = 0; i < work.Count; i++)
+            {
+                TempImportExcel.Cells[i + 18, 2].Value = work[i].Title;
+                TempImportExcel.Cells[i + 18, 3].Value = work[i].AllocMoney;
+                for (int j=0;j<SubcontrWork.Count;j++)
+                {
+                    for (int k = 0; k < SubcontrWork[j].Count; k++)
+                    {
+                        if ((SubcontrWork[j])[k].Title.Trim() == work[i].Title.Trim())
+                        {
+                            TempImportExcel.Cells[i + 18, 5 + j].Value = (SubcontrWork[j])[k].AllocMoney;
+                        }
+                    }
+                }
+            }
+
         }
     }
 }
