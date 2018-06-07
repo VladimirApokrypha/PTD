@@ -78,6 +78,22 @@ namespace FuncionalPTD.FunctionalClasses
             Excel.Worksheet TempWorkSheet = TempWoorkBook.Worksheets.get_Item(1);
             TempImportExcel.DisplayAlerts = false;
 
+            for (int i = 0; i < contrWork.Count; i++)
+            {
+                TempImportExcel.Cells[i + 18, 2].Value = contrWork[i].Title;
+                TempImportExcel.Cells[i + 18, 3].Value = contrWork[i].AllocMoney;
+                for (int j = 0; j < subcontrWorks.Count; j++)
+                {
+                    for (int k = 0; k < subcontrWorks[j].Count; k++)
+                    {
+                        if ((subcontrWorks[j])[k].Title.Title.Trim() == contrWork[i].Title.Title.Trim())
+                        {
+                            TempImportExcel.Cells[i + 18, 5 + j].Value = (subcontrWorks[j])[k].AllocMoney;
+                        }
+                    }
+                }
+            }
+
             return new CASCombine();
         }
     }
