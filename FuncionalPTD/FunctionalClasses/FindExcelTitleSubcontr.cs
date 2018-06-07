@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FuncionalPTD.FunctionalInterfaces.Behaviors;
 using Excel = Microsoft.Office.Interop.Excel;
+using DomainPTD.DomainClasses;
 
 namespace FuncionalPTD.FunctionalClasses
 {
@@ -22,7 +23,7 @@ namespace FuncionalPTD.FunctionalClasses
         /// метод нахождения названия компании в Excel-файле генподрядчика
         /// </summary>
         /// <returns></returns>
-        public string FindTitle(Excel.Application TempImportExcel, int index)
+        public CASTitle FindTitle(Excel.Application TempImportExcel, int index)
         {
             if (CountingColumn == 0 || CountingLine == 0)
             {
@@ -38,8 +39,10 @@ namespace FuncionalPTD.FunctionalClasses
                     CountingLine++;
             }
 
-            string Return = TempImportExcel.Cells[findIndexLine(index), CountingColumn].Text;
-            return Return;
+            CASTitle result = new CASTitle();
+            result.Title = TempImportExcel.Cells[findIndexLine(index), CountingColumn].Text;
+            result.Point = false;
+            return result;
         }
 
         private Excel.Range findLeftTopCell()

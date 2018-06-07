@@ -33,7 +33,7 @@ namespace FuncionalPTD.FunctionalClasses
         /// <param name="path"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        public string FindTitle(Excel.Application TempImportExcel, int index)
+        public CASTitle FindTitle(Excel.Application TempImportExcel, int index)
         {
             return FindTitleBehavior.FindTitle(TempImportExcel, index);
         }

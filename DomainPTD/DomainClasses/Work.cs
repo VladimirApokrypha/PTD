@@ -16,7 +16,7 @@ namespace DomainPTD.DomainClasses
         /// <summary>
         /// наименование работы
         /// </summary>
-        public string Title { get; set; }
+        public CASTitle Title { get; set; }
         /// <summary>
         /// выделенные на работу деньги
         /// </summary>

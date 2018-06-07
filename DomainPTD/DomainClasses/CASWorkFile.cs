@@ -21,5 +21,6 @@ namespace DomainPTD.DomainClasses
         /// </summary>
         public List<Work> WorkList { get; set; }
             = new List<Work>();
+        public string Extension { get; set; }
     }
 }

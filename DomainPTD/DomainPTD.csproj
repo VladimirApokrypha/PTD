@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainClasses\CASCombine.cs" />
+    <Compile Include="DomainClasses\CASTitle.cs" />
     <Compile Include="DomainClasses\CASWorkFile.cs" />
     <Compile Include="DomainClasses\Contractor.cs" />
     <Compile Include="DomainClasses\ContrWorkFile.cs" />

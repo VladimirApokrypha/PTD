@@ -11,28 +11,34 @@ using DomainPTD.DomainInterfaces;
 
 namespace FuncionalPTD.FunctionalClasses
 {
-    public delegate List<Work> MakeFunction(IWorkFile workFileList);
+    public delegate List<Work> MakeWorkFunction(IWorkFile workFileList);
+    public delegate CASCombine MakeFileFunction(List<Work> contrWork, List<List<Work>> subcontrWorks, string path);
 
     public class CASFileMaker : IFileMaker
     {
         public CASFileMaker()
         {
             TypeFileList.Add("xlsx", ExcelMakeWorkList);
+            TypeOutFile.Add("xlsx", ExcelLoop);
         }
 
-        public Dictionary<string, MakeFunction> TypeFileList { get; set; }
-            = new Dictionary<string, MakeFunction>();
+        public Dictionary<string, MakeWorkFunction> TypeFileList { get; set; }
+            = new Dictionary<string, MakeWorkFunction>();
 
-        public IWorkFile MakeFile(List<IWorkFile> workFileList)
+        public Dictionary<string, MakeFileFunction> TypeOutFile { get; set; }
+            = new Dictionary<string, MakeFileFunction>();
+
+        public IWorkFile MakeFile(List<IWorkFile> workFileList, string path)
         {
             List<List<Work>> allWorks = new List<List<Work>>();
+            CASCombine result = new CASCombine();
+            
             foreach (var temp in workFileList)
             {
-                MakeFunction function = TypeFileList[temp.Extension];
+                MakeWorkFunction function = TypeFileList[temp.Extension];
                 allWorks.Add(function(temp));
             }
 
-            CASCombine result = new CASCombine();
             return result;
         }
 
@@ -62,6 +68,17 @@ namespace FuncionalPTD.FunctionalClasses
             }
 
             return works;
+        }
+
+        public CASCombine ExcelLoop(List<Work> contrWork, List<List<Work>> subcontrWorks, string path)
+        {
+            Excel.Application TempImportExcel = new Excel.Application(); ;
+            Excel.Workbook TempWoorkBook =
+            TempImportExcel.Application.Workbooks.Open(path);
+            Excel.Worksheet TempWorkSheet = TempWoorkBook.Worksheets.get_Item(1);
+            TempImportExcel.DisplayAlerts = false;
+
+            return new CASCombine();
         }
     }
 }

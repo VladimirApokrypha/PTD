@@ -72,3 +72,18 @@ C:\Users\Андрей\Desktop\Новая папка (2)\PTD\FuncionalPTD\bin\Deb
 C:\Users\Андрей\Desktop\Новая папка (2)\PTD\FuncionalPTD\bin\Debug\DomainPTD.dll.config
 C:\Users\Андрей\Desktop\Новая папка (2)\PTD\FuncionalPTD\bin\Debug\EntityFramework.xml
 C:\Users\Андрей\Desktop\Новая папка (2)\PTD\FuncionalPTD\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\obj\Debug\FuncionalPTD.csprojResolveAssemblyReference.cache
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\obj\Debug\FuncionalPTD.csproj.ResolveComReference.cache
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\obj\Debug\FuncionalPTD.csproj.CoreCompileInputs.cache
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\obj\Debug\FuncionalPTD.dll
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\obj\Debug\FuncionalPTD.pdb
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\bin\Debug\FuncionalPTD.dll.config
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\bin\Debug\FuncionalPTD.dll
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\bin\Debug\FuncionalPTD.pdb
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\bin\Debug\DomainPTD.dll
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\bin\Debug\EntityFramework.dll
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\bin\Debug\DomainPTD.pdb
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\bin\Debug\DomainPTD.dll.config
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\bin\Debug\EntityFramework.xml
+C:\Users\Владимир\Desktop\проект\PTD-master2\FuncionalPTD\bin\Debug\EntityFramework.SqlServer.xml

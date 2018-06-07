@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
+using DomainPTD.DomainClasses;
 
 namespace FuncionalPTD.FunctionalInterfaces.Behaviors
 {
@@ -16,6 +17,6 @@ namespace FuncionalPTD.FunctionalInterfaces.Behaviors
         /// метод нахождения названия компании в файле
         /// </summary>
         /// <returns></returns>
-        string FindTitle(Excel.Application TempImportExcel, int index);
+        CASTitle FindTitle(Excel.Application TempImportExcel, int index);
     }
 }

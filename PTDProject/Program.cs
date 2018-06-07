@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FuncionalPTD.FunctionalClasses;
 using DomainPTD.DomainClasses;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.IO;
 
 namespace PTDProject
 {
@@ -15,11 +16,14 @@ namespace PTDProject
         {
             Excel.Application TempImportExcel = new Excel.Application(); ;
             Excel.Workbook TempWoorkBook =
-            TempImportExcel.Application.Workbooks.Open(@"C:\Users\Андрей\Desktop\Ik22_Fakt_Vypolnenie_Sogl_Dogovora_Gp_Na_07_11_2017 (2).xlsx");
+            TempImportExcel.Application.Workbooks.Open(@"C:\Users\Владимир\Desktop\Лист Microsoft Excel (2).xlsx");
             Excel.Worksheet TempWorkSheet = TempWoorkBook.Worksheets.get_Item(1);
             TempImportExcel.DisplayAlerts = false;
-            
+
+            TempImportExcel.Cells[1, 1] = "2";
+
             Console.ReadKey();
+            TempWorkSheet.SaveAs(@"C:\Users\Владимир\Desktop\Лист Microsoft Excel (2).xlsx");
             TempWoorkBook.Close(false);
             TempImportExcel.Quit();
             TempImportExcel = null;

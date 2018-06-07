@@ -7,7 +7,7 @@ using DomainPTD.DomainInterfaces;
 
 namespace DomainPTD.DomainClasses
 {
-    class CASCombine : IWorkFile
+    public class CASCombine : IWorkFile
     {
         public string Path
         {
@@ -18,7 +18,7 @@ namespace DomainPTD.DomainClasses
             set
             {
                 _path = value;
-                Extension = _path.Split(new Char[] { '.' }).LastOrDefault();
+                Extension = _path.Split('.').LastOrDefault();
             }
         }
         string _path;

@@ -9,6 +9,6 @@ namespace FuncionalPTD.FunctionalInterfaces
 {
     public interface IFileMaker
     {
-        IWorkFile MakeFile(List<IWorkFile> workFileList);
+        IWorkFile MakeFile(List<IWorkFile> workFileList, string path);
     }
 }
