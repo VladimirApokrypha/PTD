@@ -41,6 +41,7 @@ namespace FuncionalPTD.FunctionalClasses
             result.Title = TempImportExcel.Cells[CountingLine + index, CountingColumn].Text;
             if (TempImportExcel.Cells[CountingLine + index, CountingColumn - 1].Value == null)
                 result.Point = false;
+            else result.Point = true;
             return result;
         }
 

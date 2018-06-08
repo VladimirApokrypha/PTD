@@ -16,5 +16,6 @@ namespace DomainPTD.DomainInterfaces
         /// </summary>
         string Path { get; set; }
         string Extension { get; set; }
+        IWorker worker { get; set; }
     }
 }

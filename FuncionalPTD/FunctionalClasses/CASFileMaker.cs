@@ -11,10 +11,10 @@ using DomainPTD.DomainInterfaces;
 
 namespace FuncionalPTD.FunctionalClasses
 {
-    public delegate List<Work> MakeWorkFunction(IWorkFile workFileList);
-    public delegate void MakeFileFunction(List<Work> contrWork, List<List<Work>> subcontrWorks, string path);
+    public delegate IWorker MakeWorkFunction(IWorkFile workFileList);
+    public delegate void MakeFileFunction(Contractor contrWork, List<Subcontractor> subcontrWorks, string path);
 
-    public class CASFileMaker : IFileMaker
+    public class CASFileMaker //: IFileMaker
     {
         public CASFileMaker()
         {
@@ -28,29 +28,26 @@ namespace FuncionalPTD.FunctionalClasses
         public Dictionary<string, MakeFileFunction> TypeOutFile { get; set; }
             = new Dictionary<string, MakeFileFunction>();
 
-        public IWorkFile MakeFile(List<IWorkFile> workFileList, string path)
+        public void MakeFile(List<IWorkFile> workFileList, string path)
         {
-            List<List<Work>> allWorks = new List<List<Work>>();
-            List<Work> contrWorks = new List<Work>();
-            CASCombine result = new CASCombine();
-            result.Path = path;
+            List<Subcontractor> allSubcrotractors = new List<Subcontractor>();
+            Contractor contractor = new Contractor();
 
             foreach (var temp in workFileList)
             {
                 MakeWorkFunction makeWorkFunction = TypeWorkList[temp.Extension];
                 if (temp is SubcontrWorkFile)
-                    allWorks.Add(makeWorkFunction(temp));
+                    allSubcrotractors.Add((Subcontractor)makeWorkFunction(temp));
                 else
-                    contrWorks = makeWorkFunction(temp);
+                    contractor = (Contractor)makeWorkFunction(temp);
             }
 
-            MakeFileFunction makeFileFunction = TypeOutFile[result.Extension];
-            makeFileFunction(contrWorks, allWorks, result.Path);
-
-            return result;
+            string extension = path.Split('.').Last();
+            MakeFileFunction makeFileFunction = TypeOutFile[extension];
+            makeFileFunction(contractor, allSubcrotractors, path);
         }
 
-        public List<Work> ExcelMakeWorkList(IWorkFile workFile)
+        public IWorker ExcelMakeWorkList(IWorkFile workFile)
         {
             Excel.Application TempImportExcel = new Excel.Application(); ;
             Excel.Workbook TempWoorkBook =
@@ -58,6 +55,7 @@ namespace FuncionalPTD.FunctionalClasses
             Excel.Worksheet TempWorkSheet = TempWoorkBook.Worksheets.get_Item(1);
             TempImportExcel.DisplayAlerts = false;
 
+            IWorker worker = workFile.worker;
             List<Work> works = new List<Work>();
             
             if (workFile is SubcontrWorkFile)
@@ -84,10 +82,11 @@ namespace FuncionalPTD.FunctionalClasses
             TempWorkSheet = null;
             GC.Collect();
 
-            return works;
+            worker.WorkList = works;
+            return worker;
         }
 
-        public void ExcelLoop(List<Work> contrWork, List<List<Work>> subcontrWorks, string path)
+        public void ExcelLoop(Contractor contrWork, List<Subcontractor> subcontrWorks, string path)
         {
             Excel.Application TempImportExcel = new Excel.Application(); ;
             Excel.Workbook TempWoorkBook =
@@ -96,23 +95,44 @@ namespace FuncionalPTD.FunctionalClasses
             TempImportExcel.DisplayAlerts = false;
             TempImportExcel.Visible = true;
 
-            for (int i = 0; i < contrWork.Count; i++)
-            {
-                TempImportExcel.Cells[i + 18, 2].Value = contrWork[i].Title.Title;
-                if (contrWork[i].Title.Point == true)
-                    TempImportExcel.Cells[i + 18, 1].Value = i + 1;
+            int coutingColumn = 2;
+            int coutingLine = 18;
 
-                TempImportExcel.Cells[i + 18, 3].Value = contrWork[i].AllocMoney;
+            for (int i = 0; i < subcontrWorks.Count; i++)
+                TempImportExcel.Cells[12, 7 + i].Value = subcontrWorks[i].Name;
+
+            for (int i = 0, index = 1; i < contrWork.WorkList.Count; i++)
+            {
+                TempImportExcel.Cells[i + coutingLine, coutingColumn].Value = contrWork.WorkList[i].Title.Title;
+                if (contrWork.WorkList[i].Title.Point == true)
+                    TempImportExcel.Cells[i + coutingLine, coutingColumn - 1].Value = index++;
+
+                coutingColumn++;
+                decimal sum = 0;
+
+                TempImportExcel.Cells[i + coutingLine, coutingColumn].Value = contrWork.WorkList[i].AllocMoney;
+
+                coutingColumn += 4;
                 for (int j = 0; j < subcontrWorks.Count; j++)
                 {
-                    for (int k = 0; k < subcontrWorks[j].Count; k++)
+                    
+                    for (int k = 0; k < subcontrWorks[j].WorkList.Count; k++)
                     {
-                        if ((subcontrWorks[j])[k].Title.Title.Trim() == contrWork[i].Title.Title.Trim())
-                        {
-                            TempImportExcel.Cells[i + 18, 5 + j].Value = (subcontrWorks[j])[k].AllocMoney;
-                        }
+                        if ((subcontrWorks[j]).WorkList[k].Title.Title.Trim() == contrWork.WorkList[i].Title.Title.Trim())
+                            TempImportExcel.Cells[i + coutingLine, coutingColumn + j].Value = subcontrWorks[j].WorkList[k].AllocMoney;
                     }
+
+                    if (TempImportExcel.Cells[i + coutingLine, 7 + j].Value != null)
+                        sum += (decimal)TempImportExcel.Cells[i + coutingLine, coutingColumn + j].Value;
                 }
+
+                if (sum != 0) TempImportExcel.Cells[i + coutingLine, coutingColumn + subcontrWorks.Count].Value = sum;
+
+                if (TempImportExcel.Cells[i + coutingLine, coutingColumn + subcontrWorks.Count].Value != null && TempImportExcel.Cells[i + coutingLine, 4].Value != null)
+                    TempImportExcel.Cells[i + coutingLine, coutingColumn + subcontrWorks.Count + 1].Value = (decimal)TempImportExcel.Cells[i + coutingLine, 4].Value - (decimal)TempImportExcel.Cells[i + coutingLine, coutingColumn + subcontrWorks.Count].Value;
+
+                coutingColumn = 2;
+                coutingLine = 18;
             }
 
             TempWorkSheet.SaveAs(path);

@@ -135,13 +135,14 @@ namespace FuncionalPTD.FunctionalClasses
         /// метод добавляет нового генподрядчика по указанному пути или создает в случае его отсутствия
         /// </summary>
         /// <param name="path"></param>
-        public void AddContractor(string path)
+        public void AddContractor(string path, string name)
         {
             if (Contractor.Path != null)
             {
                 File.Delete(Contractor.Path);
             }
             Contractor.Path = Path.Combine(ReportPath, ContractorFolderName, findFullName(path));
+            Contractor.worker.Name = name;
             File.Copy(path, Contractor.Path);
         }
 
@@ -149,10 +150,11 @@ namespace FuncionalPTD.FunctionalClasses
         /// метод добавляет нового субподрядчика
         /// </summary>
         /// <param name="path"></param>
-        public void AddSubcontractor (string path)
+        public void AddSubcontractor (string path, string name)
         {
             SubcontrWorkFile newSubcontractor = new SubcontrWorkFile();
             newSubcontractor.Path = Path.Combine(ReportPath, SubcontractorFolderName, findFullName(path));
+            newSubcontractor.worker.Name = name;
             foreach (SubcontrWorkFile temp in Subcontractors)
             {
                 if (temp.Path == newSubcontractor.Path)
