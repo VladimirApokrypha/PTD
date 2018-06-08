@@ -11,6 +11,7 @@ namespace DomainPTD.DomainClasses
     /// <summary>
     /// класс, описывающий данные работы
     /// </summary>
+    [Serializable]
     public class Work
     {
         /// <summary>

@@ -60,12 +60,15 @@ namespace FuncionalPTD.FunctionalClasses
 
         private int findIndexLine(int index)
         {
+            int temp = index;
             int resultIndex = CountingLine - 1;
             while (index != 0)
             {
                 resultIndex++;
                 if (TempImportExcel.Cells[resultIndex, CountingColumn - 1].Value != null)
                     index--;
+                if (resultIndex == TempImportExcel.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row)
+                    return findIndexLine(temp - 1);
             }
             return resultIndex;
         }

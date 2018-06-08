@@ -62,7 +62,9 @@ namespace FuncionalPTD.FunctionalClasses
         public int LastIndexInFile(Excel.Application TempImportExcel)
         {
             int result;
-            for (result = 0; FindTitleBehavior.FindTitle(TempImportExcel, result) != null; result++) ;
+            for (result = 1;
+                FindTitleBehavior.FindTitle(TempImportExcel, result).Title != FindTitleBehavior.FindTitle(TempImportExcel, result + 1).Title;
+                result++) ;
             return result;
         }
     }

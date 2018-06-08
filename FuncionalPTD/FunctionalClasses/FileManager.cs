@@ -19,6 +19,17 @@ namespace FuncionalPTD.FunctionalClasses
     [Serializable]
     public class FileManager
     {
+        public FileManager()
+        {
+            Serializer serializer = new Serializer();
+            FileManager manager = (FileManager)serializer.DeserializeObject(SerializeFile);
+            CurrentReportPath = manager.CurrentReportPath;
+            ReportPath = manager.ReportPath;
+            CurrentResourcesPath = manager.CurrentResourcesPath;
+            Contractor = manager.Contractor;
+            Subcontractors = manager.Subcontractors;
+        }
+
         private const string ContractorFolderName = "Генподрядчик";
         private const string SubcontractorFolderName = "Субподрядчик";
         private const string ResourcesFolderName = "Ресурсы";
@@ -63,6 +74,8 @@ namespace FuncionalPTD.FunctionalClasses
             CurrentResourcesPath = null;
             Contractor = new ContrWorkFile();
             Subcontractors = new ObservableCollection<SubcontrWorkFile>();
+
+            Directory.CreateDirectory(CurrentReportPath);
         }
 
         /// <summary>
@@ -157,7 +170,11 @@ namespace FuncionalPTD.FunctionalClasses
         /// <param name="path"></param>
         public void AddCASFile(string path)
         {
-            
+            List<IWorkFile> allFiles = new List<IWorkFile>();
+            allFiles.Add(Contractor);
+            allFiles.AddRange(Subcontractors.ToList());
+            CASFileMaker maker = new CASFileMaker();
+            maker.MakeFile(allFiles, path);
         }
 
         public bool IsContractorFileExist()

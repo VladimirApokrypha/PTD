@@ -14,22 +14,15 @@ namespace PTDProject
     {
         static void Main(string[] args)
         {
-            Excel.Application TempImportExcel = new Excel.Application(); ;
-            Excel.Workbook TempWoorkBook =
-            TempImportExcel.Application.Workbooks.Open(@"C:\Users\Владимир\Desktop\Лист Microsoft Excel (2).xlsx");
-            Excel.Worksheet TempWorkSheet = TempWoorkBook.Worksheets.get_Item(1);
-            TempImportExcel.DisplayAlerts = false;
-
-            TempImportExcel.Cells[1, 1] = "2";
-
+            FileManager manager = new FileManager();
+            //manager.CreateGeneralFolder(@"C:\Users\Владимир\Desktop", "test folder");
+            //manager.CreateProject("test project");
+            //manager.AddContractor(@"C:\Users\Владимир\Desktop\ИК22 факт выполнение согл договора ГП на 07.11.2017.xlsx");
+            //manager.AddSubcontractor(@"C:\Users\Владимир\Desktop\выполнение согл договора Универсал на 13.07.2017.xlsx");
+            //manager.AddSubcontractor(@"C:\Users\Владимир\Desktop\выполнение согл договора Универсал на 13.07.2017 — копия.xlsx");
+            //manager.Serialize();
+            manager.AddCASFile(@"C:\Users\Владимир\Desktop\test folder\test project\test file.xlsx");
             Console.ReadKey();
-            TempWorkSheet.SaveAs(@"C:\Users\Владимир\Desktop\Лист Microsoft Excel (2).xlsx");
-            TempWoorkBook.Close(false);
-            TempImportExcel.Quit();
-            TempImportExcel = null;
-            TempWoorkBook = null;
-            TempWorkSheet = null;
-            GC.Collect();
         }
     }
 }

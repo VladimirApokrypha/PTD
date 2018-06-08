@@ -185,7 +185,7 @@ namespace FuncionalPTD.FunctionalClasses
             int resultIndex = CountingLine + 1;
             for (int i = CountingLine + 1; index != 0; i++)
             {
-                if (TempImportExcel.Cells[i, CountingColumn].Value != null)
+                if (TempImportExcel.Cells[i, CountingColumn + 1].Value != null)
                 {
                     resultIndex = i;
                     index--;

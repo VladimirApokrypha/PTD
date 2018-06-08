@@ -33,8 +33,8 @@ namespace FuncionalPTD.FunctionalClasses
                 CountingLine = leftTopCell.Row;
                 CountingColumn = leftTopCell.Column + 1;
 
-                for (int i = 1; TempImportExcel.Cells[CountingLine + 1, leftTopCell.Column].Text.Trim() != "1"; i++)
-                    CountingLine++;
+                for (int i = 1; TempImportExcel.Cells[CountingLine + 1, leftTopCell.Column].Text.Trim() != "1";
+                    CountingLine++, i++) ;
             }
 
             CASTitle result = new CASTitle();
