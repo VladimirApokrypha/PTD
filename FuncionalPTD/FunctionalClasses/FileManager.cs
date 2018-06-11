@@ -9,6 +9,7 @@ using DomainPTD.DomainInterfaces;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Excel = Microsoft.Office.Interop.Excel;
 
 
 namespace FuncionalPTD.FunctionalClasses
@@ -28,6 +29,7 @@ namespace FuncionalPTD.FunctionalClasses
             CurrentResourcesPath = manager.CurrentResourcesPath;
             Contractor = manager.Contractor;
             Subcontractors = manager.Subcontractors;
+            Labels = manager.Labels;
         }
 
         private const string ContractorFolderName = "Генподрядчик";
@@ -62,6 +64,9 @@ namespace FuncionalPTD.FunctionalClasses
         public ObservableCollection<SubcontrWorkFile> Subcontractors { get; set; }
             = new ObservableCollection<SubcontrWorkFile>();
 
+        public ObservableCollection<Label> Labels { get; set; }
+            = new ObservableCollection<Label>();
+
         /// <summary>
         /// метод создает корневой каталог по указанному пути
         /// </summary>
@@ -73,7 +78,6 @@ namespace FuncionalPTD.FunctionalClasses
             CurrentResourcesPath = null;
             Contractor = new ContrWorkFile();
             Subcontractors = new ObservableCollection<SubcontrWorkFile>();
-
             Directory.CreateDirectory(CurrentReportPath);
         }
 
@@ -101,6 +105,11 @@ namespace FuncionalPTD.FunctionalClasses
             Subcontractors = manager.Subcontractors;
         }
 
+        public void OpenProject(string title)
+        {
+            ReportPath = title;
+        }
+
         /// <summary>
         /// метод выстраивает древо каталогов при создании проекта
         /// </summary>
@@ -114,21 +123,21 @@ namespace FuncionalPTD.FunctionalClasses
             Directory.CreateDirectory(Path.Combine(ReportPath, ResourcesFolderName));
         }
 
-        public void OpenProject(string name)
-        {
-            ReportPath = Path.Combine(CurrentReportPath, name);
+        //public void OpenProject(string name)
+        //{
+        //    ReportPath = Path.Combine(CurrentReportPath, name);
 
-            DirectoryInfo contrInfo = new DirectoryInfo(Path.Combine(ReportPath, ContractorFolderName));
-            FileInfo[] contr = contrInfo.GetFiles();
-            Contractor.Path = Path.Combine(ReportPath, ContractorFolderName, contr[0].Name);
+        //    DirectoryInfo contrInfo = new DirectoryInfo(Path.Combine(ReportPath, ContractorFolderName));
+        //    FileInfo[] contr = contrInfo.GetFiles();
+        //    Contractor.Path = Path.Combine(ReportPath, ContractorFolderName, contr[0].Name);
 
-            DirectoryInfo subcontrInfo = new DirectoryInfo(Path.Combine(ReportPath, SubcontractorFolderName));
-            foreach (FileInfo temp in subcontrInfo.GetFiles())
-            {
-                Subcontractors.Add(new SubcontrWorkFile()
-                { Path = Path.Combine(ReportPath, SubcontractorFolderName, temp.Name) });
-            }
-        }
+        //    DirectoryInfo subcontrInfo = new DirectoryInfo(Path.Combine(ReportPath, SubcontractorFolderName));
+        //    foreach (FileInfo temp in subcontrInfo.GetFiles())
+        //    {
+        //        Subcontractors.Add(new SubcontrWorkFile()
+        //        { Path = Path.Combine(ReportPath, SubcontractorFolderName, temp.Name) });
+        //    }
+        //}
 
         /// <summary>
         /// метод добавляет нового генподрядчика по указанному пути или создает в случае его отсутствия
@@ -176,6 +185,29 @@ namespace FuncionalPTD.FunctionalClasses
             allFiles.AddRange(Subcontractors.ToList());
             CASFileMaker maker = new CASFileMaker();
             maker.MakeFile(allFiles, path);
+        }
+
+        public void CreateLabel(string cell, string path, string title)
+        {
+            Excel.Application TempImportExcel = new Excel.Application(); ;
+            Excel.Workbook TempWoorkBook =
+            TempImportExcel.Application.Workbooks.Add(1);
+            Excel.Worksheet TempWorkSheet = TempWoorkBook.Worksheets.get_Item(1);
+            TempImportExcel.DisplayAlerts = false;
+
+            Label mark = new Label();
+            mark.Cell = cell;
+            mark.FilePath = path;
+            mark.Title = title;
+            mark.Info = TempWorkSheet.Cells[cell].Value;
+            Labels.Add(mark);
+
+            TempWoorkBook.Close(false);
+            TempImportExcel.Quit();
+            TempImportExcel = null;
+            TempWoorkBook = null;
+            TempWorkSheet = null;
+            GC.Collect();
         }
 
         public bool IsContractorFileExist()

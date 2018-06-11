@@ -94,12 +94,14 @@ namespace FuncionalPTD.FunctionalClasses
             TempImportExcel.Application.Workbooks.Add(1);
             Excel.Worksheet TempWorkSheet = TempWoorkBook.Worksheets.get_Item(1);
             TempImportExcel.DisplayAlerts = false;
-            TempImportExcel.Visible = true;
+            //TempImportExcel.Visible = true;
 
             Excel.Range range;
             object[,] array = new object[contrWork.WorkList.Count + 20, contrWork.WorkList[1].PeriodList.Count * (subcontrWorks.Count + 3) * 6];
             int coutingColumn = 2;
             int coutingLine = 17;
+
+            array[13, 2] = "ВСЕГО стоимость, руб.";
 
             for (int i = 0; i < subcontrWorks.Count; i++)
             {
@@ -113,7 +115,21 @@ namespace FuncionalPTD.FunctionalClasses
             {
                 array[i + coutingLine, coutingColumn] = contrWork.WorkList[i].Title.Title;
                 if (contrWork.WorkList[i].Title.Point == true)
+                {
                     array[i + coutingLine, coutingColumn - 1] = index++;
+                    Excel.Range temp = TempWorkSheet.Range[TempImportExcel.Cells[i + coutingLine + 1, 2], TempImportExcel.Cells[i + coutingLine + 1, 3]];
+                    temp.EntireRow.Font.Bold = true;
+                    Excel.Range temp2 = TempWorkSheet.Range[TempImportExcel.Cells[i + coutingLine + 1, 2], TempImportExcel.Cells[i + coutingLine + 1, 2]];
+                    temp2.HorizontalAlignment = Excel.Constants.xlCenter;
+                }
+                else
+                {
+                    array[i + coutingLine, coutingColumn - 1] = " ";
+                    Excel.Range temp = TempWorkSheet.Range[TempImportExcel.Cells[i + coutingLine + 1, 3], TempImportExcel.Cells[i + coutingLine + 1, 3]];
+                    temp.Font.Italic = true;
+                    temp.HorizontalAlignment = Excel.Constants.xlRight;
+                    temp.WrapText = true;
+                }
 
                 coutingColumn++;
 
@@ -198,7 +214,7 @@ namespace FuncionalPTD.FunctionalClasses
                     }
                     sum = 0;
                 }
-
+                
                 decimal resultContrSum = contrWork.WorkList[i].AllocMoney - prevContrSum;
                 array[i + coutingLine, coutingColumn++] = resultContrSum;
                 for (int j = 0; j < subcontrWorks.Count; j++, coutingColumn++)
@@ -224,11 +240,6 @@ namespace FuncionalPTD.FunctionalClasses
                 coutingLine = 17;
             }
 
-            Excel.Range rangee = TempWorkSheet.Range
-                [TempWorkSheet.Cells[1, 1],
-                TempWorkSheet.Cells[contrWork.WorkList.Count + 20, contrWork.WorkList[1].PeriodList.Count * (subcontrWorks.Count + 3) * 6]];
-
-            rangee.Value = array;
 
             range = TempWorkSheet.get_Range("B10", "B12");
             range.EntireColumn.ColumnWidth = 8;
@@ -371,6 +382,50 @@ namespace FuncionalPTD.FunctionalClasses
             range.Borders.Weight = Excel.XlBorderWeight.xlThin;
 
 
+            coutingColumn = 3;
+            coutingLine = 17;
+
+            decimal allSum = 0;
+            
+            for (int i = coutingColumn; i < contrWork.WorkList[1].PeriodList.Count * (subcontrWorks.Count + 3) * 6; i++)
+            {
+                for (int j = coutingLine; j < contrWork.WorkList.Count + 17; j++)
+                {
+                    if (array[j, i] is decimal) allSum += (decimal)array[j, i];
+                }
+                if (allSum != 0)
+                    array[13, i] = allSum;
+                allSum = 0;
+            }
+
+            for (int i = 0; i < array.Length / array.GetLength(1); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    if (array[i, j] != null && array[i, j].ToString() == "0")
+                        array[i, j] = "";
+                }
+            }
+
+            object[,] newArray = new object[contrWork.WorkList.Count + 20, contrWork.WorkList[1].PeriodList.Count * (subcontrWorks.Count + 3) * 6];
+
+            for (int i = 13, newI = 0; i < contrWork.WorkList.Count + 20; i++, newI++)
+            {
+                for (int j = 1, newJ = 0; j < contrWork.WorkList[1].PeriodList.Count * (subcontrWorks.Count + 3) * 6; j++, newJ++)
+                {
+                    newArray[newI, newJ] = array[i, j];
+                }
+            }
+
+
+            Excel.Range rangee = TempWorkSheet.Range
+                [TempWorkSheet.Cells[14, 2],
+                TempWorkSheet.Cells[contrWork.WorkList.Count + 20, contrWork.WorkList[1].PeriodList.Count * (subcontrWorks.Count + 3) * 6]];
+
+            rangee.Value = newArray;
+
+            range = TempWorkSheet.get_Range((object)TempImportExcel.Cells[16, 2], (object)TempImportExcel.Cells[17, LastColumn - 1]);
+            range.Interior.ColorIndex = 6;
             TempWorkSheet.SaveAs(path);
             TempWoorkBook.Close(false);
             TempImportExcel.Quit();

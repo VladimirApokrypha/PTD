@@ -52,6 +52,7 @@
     <Compile Include="DomainClasses\CASWorkFile.cs" />
     <Compile Include="DomainClasses\Contractor.cs" />
     <Compile Include="DomainClasses\ContrWorkFile.cs" />
+    <Compile Include="DomainClasses\Label.cs" />
     <Compile Include="DomainClasses\Subcontractor.cs" />
     <Compile Include="DomainClasses\SubcontrWorkFile.cs" />
     <Compile Include="DomainClasses\Work.cs" />
