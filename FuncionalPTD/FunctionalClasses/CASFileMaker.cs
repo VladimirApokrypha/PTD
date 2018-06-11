@@ -54,25 +54,26 @@ namespace FuncionalPTD.FunctionalClasses
             TempImportExcel.Application.Workbooks.Open(workFile.Path);
             Excel.Worksheet TempWorkSheet = TempWoorkBook.Worksheets.get_Item(1);
             TempImportExcel.DisplayAlerts = false;
+            object[,] array = TempWorkSheet.UsedRange.Value;
 
             IWorker worker = workFile.worker;
             List<Work> works = new List<Work>();
-            
+
             if (workFile is SubcontrWorkFile)
             {
                 CASExcelParserSubcontr parser = new CASExcelParserSubcontr();
                 CASInfoMakerSubcontr infoMaker = new CASInfoMakerSubcontr();
-                int lastIndexInFile = parser.LastIndexInFile(TempImportExcel);
+                int lastIndexInFile = parser.LastIndexInFile(array);
                 for (int index = 1; index <= lastIndexInFile; index++)
-                    works.Add(infoMaker.MakeInfoWork(TempImportExcel, index));
+                    works.Add(infoMaker.MakeInfoWork(array, index));
             }
             else
             {
                 CASExcelParserContr parser = new CASExcelParserContr();
                 CASInfoMakerContr infoMaker = new CASInfoMakerContr();
-                int lastIndexInFile = parser.LastIndexInFile(TempImportExcel);
+                int lastIndexInFile = parser.LastIndexInFile(array);
                 for (int index = 1; index <= lastIndexInFile; index++)
-                    works.Add(infoMaker.MakeInfoWork(TempImportExcel, index));
+                    works.Add(infoMaker.MakeInfoWork(array, index));
             }
 
             TempWoorkBook.Close(false);
@@ -96,14 +97,124 @@ namespace FuncionalPTD.FunctionalClasses
             TempImportExcel.Visible = true;
 
             Excel.Range range;
+            object[,] array = new object[contrWork.WorkList.Count + 20, contrWork.WorkList[1].PeriodList.Count * (subcontrWorks.Count + 3) * 6];
+            int coutingColumn = 2;
+            int coutingLine = 17;
 
+            for (int i = 0; i < subcontrWorks.Count; i++)
+            {
+                Excel.Range temp = TempWorkSheet.Range[TempImportExcel.Cells[11, 7 + i], TempImportExcel.Cells[12, 7 + i]];
+                ExcelFormat(temp);
+                temp.EntireColumn.ColumnWidth = 20;
+                array[11, 7 + i] = subcontrWorks[i].Name;
+            }
 
+            for (int i = 0, index = 1; i < contrWork.WorkList.Count; i++)
+            {
+                array[i + coutingLine, coutingColumn] = contrWork.WorkList[i].Title.Title;
+                if (contrWork.WorkList[i].Title.Point == true)
+                    array[i + coutingLine, coutingColumn - 1] = index++;
+
+                coutingColumn++;
+
+                if (contrWork.WorkList[i].AllocMoney != 0)
+                    array[i + coutingLine, coutingColumn] = contrWork.WorkList[i].AllocMoney;
+                else
+                    array[i + coutingLine, coutingColumn] = " ";
+
+                decimal sum = 0;
+                decimal prevContrSum = 0;
+                decimal[] prevSubcontrSum = new decimal[subcontrWorks.Count];
+
+                coutingColumn += 3;
+                for (int j = 0; j < subcontrWorks.Count; j++)
+                {
+                    for (int k = 0; k < subcontrWorks[j].WorkList.Count; k++)
+                    {
+                        if (subcontrWorks[j].WorkList[k].Title.Title == contrWork.WorkList[i].Title.Title
+                            && subcontrWorks[j].WorkList[k].AllocMoney != 0)
+                        {
+                            array[i + coutingLine, coutingColumn + j] = subcontrWorks[j].WorkList[k].AllocMoney;
+                            sum += subcontrWorks[j].WorkList[k].AllocMoney;
+                        }
+                    }
+                }
+
+                if (sum != 0) array[i + coutingLine, coutingColumn + subcontrWorks.Count] = sum;
+                array[i + coutingLine, coutingColumn + subcontrWorks.Count + 1] = contrWork.WorkList[i].AllocMoney - sum;
+
+                coutingColumn += subcontrWorks.Count + 2;
+                sum = 0;
+
+                for (int j = 0; j < contrWork.WorkList[i].PeriodList.Count; j++)
+                {
+                    array[i + coutingLine, coutingColumn++] = contrWork.WorkList[i].PeriodList[j].Money.Value;
+                    prevContrSum += contrWork.WorkList[i].PeriodList[j].Money.Value;
+                    for (int k = 0; k < subcontrWorks.Count; k++)
+                    {
+                        for (int r = 0; r < subcontrWorks[k].WorkList[0].PeriodList.Count; r++)
+                        {
+
+                            Work work = subcontrWorks[k].WorkList.Find
+                                (x => x.Title.Title == contrWork.WorkList[i].Title.Title);
+                            Period period = null;
+                            if (work != null)
+                            {
+                                period = work.PeriodList.Find(x => x.Date == contrWork.WorkList[i].PeriodList[j].Date);
+                                if (period != null)
+                                {
+                                    array[i + coutingLine, coutingColumn + k] = period.Money.Value;
+                                    prevSubcontrSum[k] += period.Money.Value;
+                                    sum += period.Money.Value;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    coutingColumn += subcontrWorks.Count;
+
+                    if (sum != 0) array[i + coutingLine, coutingColumn] = sum;
+                    array[i + coutingLine, coutingColumn + 1] = contrWork.WorkList[i].PeriodList[j].Money - sum;
+                    coutingColumn += 2;
+                    sum = 0;
+                    if (j != 0)
+                    {
+                        if (prevContrSum != 0)
+                            array[i + coutingLine, coutingColumn] = prevContrSum;
+                        coutingColumn++;
+                        for (int r = 0; r < subcontrWorks.Count; r++, coutingColumn++)
+                        {
+                            if (prevSubcontrSum[r] != 0)
+                            {
+                                array[i + coutingLine, coutingColumn] = prevSubcontrSum[r];
+                                sum += prevSubcontrSum[r];
+                            }
+                        }
+
+                        if (sum != 0) array[i + coutingLine, coutingColumn] = sum;
+                        array[i + coutingLine, coutingColumn + 1] = prevContrSum - sum;
+                        coutingColumn += 2;
+                    }
+                    sum = 0;
+                }
+                prevContrSum = 0;
+                coutingColumn = 2;
+                coutingLine = 17;
+            }
+
+            Excel.Range rangee = TempWorkSheet.Range
+                [TempWorkSheet.Cells[1, 1],
+                TempWorkSheet.Cells[contrWork.WorkList.Count + 20, contrWork.WorkList[1].PeriodList.Count * (subcontrWorks.Count + 3) * 6]];
+
+            rangee.Value = array;
 
             range = TempWorkSheet.get_Range("B10", "B12");
             range.EntireColumn.ColumnWidth = 8;
             range.EntireRow.RowHeight = 20;
             ExcelFormat(range);
             range.Value2 = "№ п.п.";
+
 
             range = TempWorkSheet.get_Range("C10", "C12");
             range.EntireColumn.ColumnWidth = 36;
@@ -113,7 +224,7 @@ namespace FuncionalPTD.FunctionalClasses
             range = TempWorkSheet.get_Range("D10", "D12");
             range.EntireColumn.ColumnWidth = 16;
             ExcelFormat(range);
-            range.Value2 = "стоимость работ ВСЕГО ГП";
+            range.Value2 = "Cтоимость работ ВСЕГО ГП";
 
             range = TempWorkSheet.get_Range("E10", "F10");
             range.EntireColumn.ColumnWidth = 17;
@@ -139,7 +250,7 @@ namespace FuncionalPTD.FunctionalClasses
 
             range = TempWorkSheet.get_Range("G10", (object)TempImportExcel.Cells[10, 7 + subcontrWorks.Count]);
             ExcelFormat(range);
-            range.Value2 = "Стоимость работ всего СП //по договору";
+            range.Value2 = "Стоимость работ всего СП";
 
             range = TempWorkSheet.get_Range((object)TempImportExcel.Cells[11, 7 + subcontrWorks.Count], (object)TempImportExcel.Cells[12, 7 + subcontrWorks.Count]);
             range.EntireColumn.ColumnWidth = 20;
@@ -149,17 +260,24 @@ namespace FuncionalPTD.FunctionalClasses
             range = TempWorkSheet.get_Range((object)TempImportExcel.Cells[10, 7 + subcontrWorks.Count + 1], (object)TempImportExcel.Cells[12, 7 + subcontrWorks.Count + 1]);
             range.EntireColumn.ColumnWidth = 18;
             ExcelFormat(range);
-            range.Value2 = "Разница стоимости //по договору";
+            range.Value2 = "Разница стоимости";
+
+            for (int i = 0; i < subcontrWorks.Count; i++)
+            {
+                range = TempWorkSheet.Range[TempWorkSheet.Cells[11, 7 + i], TempWorkSheet.Cells[12, 7 + i]];
+                range.Value = subcontrWorks[i].Name;
+                ExcelFormat(range);
+            }
 
             int LastColumn = 0;
             int year = contrWork.WorkList[0].PeriodList[0].Date.Year;
-            for (int i = 0, h = 11; i < contrWork.WorkList[0].PeriodList.Count; i++, h += 3 + subcontrWorks.Count)
+            for (int i = 0, h = 7 + subcontrWorks.Count + 2, z = 0; i < contrWork.WorkList[0].PeriodList.Count; i++, h += 3 + subcontrWorks.Count)
             {
                 if (contrWork.WorkList[0].PeriodList[i].Date.Year == year)
                 {
-                    if (i < 2)
+                    if (z == 0)
                     {
-                        ExcelCapForWork(h, contrWork.WorkList[0].PeriodList[i].Date.ToLongDateString(), "Выполнение работ " + contrWork.WorkList[0].PeriodList[i].Date.ToLongDateString() + " СП", "Разница стоимости за " + contrWork.WorkList[0].PeriodList[i].Date.ToLongDateString(), "Итог " + contrWork.WorkList[0].PeriodList[i].Date.ToLongDateString() + " СП", TempImportExcel, TempWorkSheet, range, subcontrWorks);
+                        ExcelCapForWork(h, contrWork.WorkList[0].PeriodList[i].Date.ToString("y"), "Выполнение работ " + contrWork.WorkList[0].PeriodList[i].Date.ToString("y") + " СП", "Разница стоимости на " + contrWork.WorkList[0].PeriodList[i].Date.ToString("y"), "Итог СП", TempImportExcel, TempWorkSheet, range, subcontrWorks);
 
                         range = TempWorkSheet.get_Range((object)TempImportExcel.Cells[10, h], (object)TempImportExcel.Cells[12, h]);
                         range.UnMerge();
@@ -174,26 +292,50 @@ namespace FuncionalPTD.FunctionalClasses
                         range.EntireColumn.ColumnWidth = 18;
                         ExcelFormat(range);
                         range.Value2 = null;
-                        range.Value2 = contrWork.WorkList[0].PeriodList[i].Date.ToLongDateString();
+                        range.Value2 = contrWork.WorkList[0].PeriodList[i].Date.ToString("y");
+                        z++;
                     }
                     else
                     {
-                        ExcelCapForWork(h, "Накопительно выпонение ГП на " + contrWork.WorkList[0].PeriodList[i].Date.ToLongDateString(), "Накопительно выпонение СП за " + contrWork.WorkList[0].PeriodList[i].Date.ToLongDateString(), "Накопительно разница (гп – сп) на " + contrWork.WorkList[0].PeriodList[i].Date.ToLongDateString(), "Итого накопительно СП", TempImportExcel, TempWorkSheet, range, subcontrWorks);
+                        ExcelCapForWork(h, contrWork.WorkList[0].PeriodList[i].Date.ToString("y"), "Выполнение работ " + contrWork.WorkList[0].PeriodList[i].Date.ToString("y") + " СП", "Разница стоимости на " + contrWork.WorkList[0].PeriodList[i].Date.ToString("y"), "Итог СП", TempImportExcel, TempWorkSheet, range, subcontrWorks);
+
+                        range = TempWorkSheet.get_Range((object)TempImportExcel.Cells[10, h], (object)TempImportExcel.Cells[12, h]);
+                        range.UnMerge();
+                        range = TempWorkSheet.get_Range((object)TempImportExcel.Cells[10, h], (object)TempImportExcel.Cells[10, h]);
+                        range.EntireColumn.ColumnWidth = 18;
+                        ExcelFormat(range);
+                        range.Value2 = "Выполнение ГП";
+
+                        range = TempWorkSheet.get_Range((object)TempImportExcel.Cells[11, h], (object)TempImportExcel.Cells[12, h]);
+                        range.UnMerge();
+                        range = TempWorkSheet.get_Range((object)TempImportExcel.Cells[11, h], (object)TempImportExcel.Cells[12, h]);
+                        range.EntireColumn.ColumnWidth = 18;
+                        ExcelFormat(range);
+                        range.Value2 = null;
+                        range.Value2 = contrWork.WorkList[0].PeriodList[i].Date.ToString("y");
+
+                        h += 3 + subcontrWorks.Count;
+
+                        ExcelCapForWork(h, "Накопительно выпонение ГП на " + contrWork.WorkList[0].PeriodList[i].Date.ToString("y"), "Накопительно выпонение СП на " + contrWork.WorkList[0].PeriodList[i].Date.ToString("y"), "Накопительно разница (гп – сп) на " + contrWork.WorkList[0].PeriodList[i].Date.ToString("y"), "Итого накопительно СП", TempImportExcel, TempWorkSheet, range, subcontrWorks);
                     }
                 }
                 else
                 {
+                    h = h - 3 - subcontrWorks.Count;
                     year++;
-                    ExcelCapForWork(h, "Итого ЗАКРЫТО ГП за " + contrWork.WorkList[0].PeriodList[i - 1].Date.Year.ToString(), "Итого закрыто СП за " + contrWork.WorkList[0].PeriodList[i - 1].Date.Year, "Разница стоимости закрытого объема (ГП – СП) за " + contrWork.WorkList[0].PeriodList[i - 1].Date.Year, "Итого закрыто СП за " + contrWork.WorkList[0].PeriodList[i - 1].Date.Year, TempImportExcel, TempWorkSheet, range, subcontrWorks);
+                    ExcelCapForWork(h, "Итого ЗАКРЫТО ГП за " + contrWork.WorkList[0].PeriodList[i - 1].Date.Year.ToString(), "Итого закрыто СП за " + contrWork.WorkList[0].PeriodList[i - 1].Date.Year, "Разница стоимости закрытого объема (ГП – СП) за " + contrWork.WorkList[0].PeriodList[i - 1].Date.Year, "Итого закрыто ", TempImportExcel, TempWorkSheet, range, subcontrWorks);
+                    z--;
+                    i--;
                 }
                 LastColumn = h;
             }
 
-            ExcelCapForWork(LastColumn, "Итого ЗАКРЫТО ГП за " + contrWork.WorkList[0].PeriodList[contrWork.WorkList[0].PeriodList.Count - 1].Date.Year.ToString(), "Итого закрыто СП за " + contrWork.WorkList[0].PeriodList[contrWork.WorkList[0].PeriodList.Count - 1].Date.Year, "Разница стоимости закрытого объема (ГП – СП) за " + contrWork.WorkList[0].PeriodList[contrWork.WorkList[0].PeriodList.Count - 1].Date.Year, "Итого закрыто СП за " + contrWork.WorkList[0].PeriodList[contrWork.WorkList[0].PeriodList.Count - 1].Date.Year, TempImportExcel, TempWorkSheet, range, subcontrWorks);
+            ExcelCapForWork(LastColumn, "Итого ЗАКРЫТО ГП за " + contrWork.WorkList[0].PeriodList[contrWork.WorkList[0].PeriodList.Count - 1].Date.Year.ToString(), "Итого закрыто СП за " + contrWork.WorkList[0].PeriodList[contrWork.WorkList[0].PeriodList.Count - 1].Date.Year, "Разница стоимости закрытого объема (ГП – СП) за " + contrWork.WorkList[0].PeriodList[contrWork.WorkList[0].PeriodList.Count - 1].Date.Year, "Итого закрыто СП", TempImportExcel, TempWorkSheet, range, subcontrWorks);
 
             LastColumn += 3 + subcontrWorks.Count;
-            ExcelCapForWork(LastColumn, "Итого договор минус закрытый объем по ГП ", "Итого договор минус закрытый объем по СП", "Разница стоимости закрытого объема(ГП – СП)", "Итого закрыто СП", TempImportExcel, TempWorkSheet, range, subcontrWorks);
+            ExcelCapForWork(LastColumn, "ИТОГО договор минус закрытый объем по ГП ", "ИТОГО договор минус закрытый объем по СП", "ИТОГО разница стоимости закрытого объема(ГП – СП)", "ИТОГО закрыто СП", TempImportExcel, TempWorkSheet, range, subcontrWorks);
 
+            LastColumn += 3 + subcontrWorks.Count;
             for (int i = 2; i < LastColumn; i++)
             {
                 range = TempWorkSheet.get_Range((object)TempImportExcel.Cells[13, i], (object)TempImportExcel.Cells[13, i]);
@@ -202,63 +344,12 @@ namespace FuncionalPTD.FunctionalClasses
 
                 range = TempWorkSheet.get_Range((object)TempImportExcel.Cells[14, i], (object)TempImportExcel.Cells[15, i]);
                 range.Merge();
-                range.Borders.ColorIndex = 1;
-                range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
-                range.Borders.Weight = Excel.XlBorderWeight.xlThin;
             }
+            range = TempWorkSheet.Range[(object)TempImportExcel.Cells[10, 2], (object)TempImportExcel.Cells[17 + contrWork.WorkList.Count, LastColumn - 1]];
+            range.Borders.ColorIndex = 1;
+            range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+            range.Borders.Weight = Excel.XlBorderWeight.xlThin;
 
-            int coutingColumn = 3;
-            int coutingLine = 18;
-
-            for (int i = 0; i < subcontrWorks.Count; i++)
-            {
-                Excel.Range temp = TempWorkSheet.Range[TempImportExcel.Cells[11, 7 + i], TempImportExcel.Cells[12, 7 + i]];
-                ExcelFormat(temp);
-                temp.EntireColumn.ColumnWidth = 20;
-                TempImportExcel.Cells[11, 7 + i].Value = subcontrWorks[i].Name;
-            }
-
-            for (int i = 0, index = 1; i < contrWork.WorkList.Count; i++)
-            {
-                TempImportExcel.Cells[i + coutingLine, coutingColumn].Value = contrWork.WorkList[i].Title.Title;
-                if (contrWork.WorkList[i].Title.Point == true)
-                    TempImportExcel.Cells[i + coutingLine, coutingColumn - 1].Value = index++;
-
-                coutingColumn++;
-
-                if (contrWork.WorkList[i].AllocMoney != 0)
-                    TempImportExcel.Cells[i + coutingLine, coutingColumn].Value = contrWork.WorkList[i].AllocMoney;
-                else
-                    TempImportExcel.Cells[i + coutingLine, coutingColumn].Value = " ";
-
-                decimal sum = 0;
-
-                coutingColumn += 3;
-                for (int j = 0; j < subcontrWorks.Count; j++)
-                {
-                    
-                    for (int k = 0; k < subcontrWorks[j].WorkList.Count; k++)
-                    {
-                        if ((subcontrWorks[j]).WorkList[k].Title.Title == contrWork.WorkList[i].Title.Title
-                            && (subcontrWorks[j]).WorkList[k].AllocMoney != 0)
-                            TempImportExcel.Cells[i + coutingLine, coutingColumn + j].Value = subcontrWorks[j].WorkList[k].AllocMoney;
-                    }
-
-                    if (TempImportExcel.Cells[i + coutingLine, 7 + j].Value != null)
-                        sum += (decimal)TempImportExcel.Cells[i + coutingLine, coutingColumn + j].Value;
-                }
-
-                if (sum != 0) TempImportExcel.Cells[i + coutingLine, coutingColumn + subcontrWorks.Count].Value = sum;
-
-                if (TempImportExcel.Cells[i + coutingLine, coutingColumn + subcontrWorks.Count].Value != null
-                    && TempImportExcel.Cells[i + coutingLine, 4].Value != null)
-                    TempImportExcel.Cells[i + coutingLine, coutingColumn + subcontrWorks.Count + 1].Value =
-                        (decimal)TempImportExcel.Cells[i + coutingLine, 4].Value
-                        - (decimal)TempImportExcel.Cells[i + coutingLine, coutingColumn + subcontrWorks.Count].Value;
-
-                coutingColumn = 3;
-                coutingLine = 18;
-            }
 
             TempWorkSheet.SaveAs(path);
             TempWoorkBook.Close(false);
@@ -271,12 +362,9 @@ namespace FuncionalPTD.FunctionalClasses
 
         private void ExcelFormat(Excel.Range inputrange)
         {
-            inputrange.Merge(Type.Missing);
+            inputrange.Merge();
             inputrange.HorizontalAlignment = Excel.Constants.xlCenter;
             inputrange.VerticalAlignment = Excel.Constants.xlCenter;
-            inputrange.Borders.ColorIndex = 1;
-            inputrange.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
-            inputrange.Borders.Weight = Excel.XlBorderWeight.xlThin;
             inputrange.WrapText = true;
         }
 

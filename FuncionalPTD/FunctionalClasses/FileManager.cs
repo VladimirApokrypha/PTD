@@ -62,7 +62,6 @@ namespace FuncionalPTD.FunctionalClasses
         public ObservableCollection<SubcontrWorkFile> Subcontractors { get; set; }
             = new ObservableCollection<SubcontrWorkFile>();
 
-
         /// <summary>
         /// метод создает корневой каталог по указанному пути
         /// </summary>

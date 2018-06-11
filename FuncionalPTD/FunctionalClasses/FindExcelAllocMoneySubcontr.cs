@@ -16,37 +16,42 @@ namespace FuncionalPTD.FunctionalClasses
         private int CountingLine { get; set; }
         private int CountingColumn { get; set; }
 
-        private Excel.Application TempImportExcel { get; set; }
+        private object[,] array { get; set; }
 
-        public decimal FindAllocMoney(Excel.Application TempImportExcel, int index)
+        public decimal FindAllocMoney(object[,] array, int index)
         {
-            if (this.TempImportExcel == null)
-                this.TempImportExcel = TempImportExcel;
+            if (this.array == null)
+                this.array = array;
             if (CountingLine == 0 || CountingColumn == 0)
             {
-                Excel.Range leftTopCell = findLeftTopCell();
+                Cell leftTopCell = findLeftTopCell();
                 CountingLine = leftTopCell.Row;
                 CountingColumn = leftTopCell.Column + 3;
 
-                for (int i = 1; TempImportExcel.Cells[CountingLine + 1, leftTopCell.Column].Text.Trim() != "1"; i++)
+                for (int i = 1; array[CountingLine + 1, leftTopCell.Column]?.ToString().Trim() != "1"; i++)
                     CountingLine++;
             }
 
             decimal Return = 0;
-            if (TempImportExcel.Cells[findIndexLine(index), CountingColumn].Value != null)
-                Return = (decimal)TempImportExcel.Cells[findIndexLine(index), CountingColumn].Value;
+            if (array[findIndexLine(index), CountingColumn] != null)
+                Return = decimal.Parse(array[findIndexLine(index), CountingColumn]?.ToString());
             return Return;
         }
 
-        private Excel.Range findLeftTopCell()
+        private Cell findLeftTopCell()
         {
+            Cell result;
             int lineIndex = 1, columnIndex = 1;
             for (lineIndex = 1; ; lineIndex++)
             {
                 for (columnIndex = 1; columnIndex <= 5; columnIndex++)
                 {
-                    if (TempImportExcel.Cells[lineIndex, columnIndex].Text.Trim() == "1")
-                        return TempImportExcel.Cells[lineIndex, columnIndex];
+                    if ((array[lineIndex, columnIndex])?.ToString().Trim() == "1")
+                    {
+                        result.Row = lineIndex;
+                        result.Column = columnIndex;
+                        return result;
+                    }
                 }
             }
         }
@@ -57,7 +62,7 @@ namespace FuncionalPTD.FunctionalClasses
             while (index != 0)
             {
                 resultIndex++;
-                if (TempImportExcel.Cells[resultIndex, CountingColumn - 2].Value != null)
+                if (array[resultIndex, CountingColumn - 2] != null)
                     index--;
             }
             return resultIndex;

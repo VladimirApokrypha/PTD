@@ -15,12 +15,12 @@ namespace FuncionalPTD.FunctionalClasses
         private CASExcelParserSubcontr parser
             = new CASExcelParserSubcontr();
 
-        public Work MakeInfoWork(Excel.Application TempImportExcel, int index)
+        public Work MakeInfoWork(object[,] array, int index)
         {
             Work result = new Work();
-            result.AllocMoney = parser.FindAllocMoney(TempImportExcel, index);
-            result.Title = parser.FindTitle(TempImportExcel, index);
-            result.PeriodList = parser.FindPeriodList(TempImportExcel, index);
+            result.AllocMoney = parser.FindAllocMoney(array, index);
+            result.Title = parser.FindTitle(array, index);
+            result.PeriodList = parser.FindPeriodList(array, index);
             return result;
         }
     }

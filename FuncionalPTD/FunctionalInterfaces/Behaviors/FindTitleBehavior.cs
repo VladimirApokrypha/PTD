@@ -17,6 +17,6 @@ namespace FuncionalPTD.FunctionalInterfaces.Behaviors
         /// метод нахождения названия компании в файле
         /// </summary>
         /// <returns></returns>
-        CASTitle FindTitle(Excel.Application TempImportExcel, int index);
+        CASTitle FindTitle(object[,] array, int index);
     }
 }

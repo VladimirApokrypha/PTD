@@ -18,7 +18,8 @@ namespace PTDProject
             //manager.CreateGeneralFolder(@"C:\Users\Владимир\Desktop", "test folder");
             //manager.CreateProject("test project");
             //manager.AddContractor(@"C:\Users\Владимир\Desktop\ИК22 факт выполнение согл договора ГП на 07.11.2017.xlsx", "Контрасктор");
-            //manager.AddSubcontractor(@"C:\Users\Владимир\Desktop\выполнение согл договора Универсал на 13.07.2017.xlsx", "Универсал");
+            //manager.AddSubcontractor(@"C:\Users\Владимир\Desktop\выполнение согл договора Универсал на 13.07.2017 — копия.xlsx", "Универсал");
+            //manager.Serialize();
             //manager.AddSubcontractor(@"C:\Users\Владимир\Desktop\выполнение согл договора Универсал на 13.07.2017 — копия.xlsx", "СибСтрой");
             //manager.Serialize();
             manager.AddCASFile(@"C:\Users\Владимир\Desktop\test folder\test project\test file.xlsx");

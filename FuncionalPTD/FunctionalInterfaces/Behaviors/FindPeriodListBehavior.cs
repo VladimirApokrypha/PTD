@@ -19,6 +19,6 @@ namespace FuncionalPTD.FunctionalInterfaces.Behaviors
         /// <param name="path"></param>
         /// /// <param name="workTitle"></param>
         /// <returns></returns>
-        List<Period> FindPeriodList(Excel.Application TempImportExcel, int index);
+        List<Period> FindPeriodList(object[,] array, int index);
     }
 }

@@ -18,6 +18,6 @@ namespace FuncionalPTD.FunctionalInterfaces
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        Work MakeInfoWork(Excel.Application TempImportExcel, int index);
+        Work MakeInfoWork(object[,] array, int index);
     }
 }

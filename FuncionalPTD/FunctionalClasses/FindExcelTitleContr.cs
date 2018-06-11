@@ -17,43 +17,56 @@ namespace FuncionalPTD.FunctionalClasses
         private int CountingLine { get; set; }
         private int CountingColumn { get; set; }
 
-        private Excel.Application TempImportExcel { get; set; }
+        private object[,] array { get; set; }
 
         /// <summary>
         /// метод нахождения названия компании в Excel-файле генподрядчика
         /// </summary>
         /// <returns></returns>
-        public CASTitle FindTitle(Excel.Application TempImportExcel, int index)
+        public CASTitle FindTitle(object[,] array, int index)
         {
-            if (this.TempImportExcel == null)
-                this.TempImportExcel = TempImportExcel;
+            if (this.array == null)
+                this.array = array;
             if (CountingLine == 0 || CountingColumn == 0)
             {
-                Excel.Range leftTopCell = findLeftTopCell();
+                Cell leftTopCell = findLeftTopCell();
                 CountingLine = leftTopCell.Row;
                 CountingColumn = leftTopCell.Column + 1;
 
-                for (int i = 1; TempImportExcel.Cells[CountingLine + 1, leftTopCell.Column].Text.Trim() != "1";
-                    CountingLine++, i++) ;
+                for (;;CountingLine++)
+                {
+                    if (array[CountingLine + 1, leftTopCell.Column] != null
+                        && array[CountingLine + 1, leftTopCell.Column].ToString().Trim() == "1")
+                        break;
+                }
             }
 
             CASTitle result = new CASTitle();
-            result.Title = TempImportExcel.Cells[CountingLine + index, CountingColumn].Text;
-            if (TempImportExcel.Cells[CountingLine + index, CountingColumn - 1].Value == null)
+            if (array[CountingLine + index, CountingColumn] != null)
+                result.Title = array[CountingLine + index, CountingColumn].ToString();
+            else
+                result.Title = "";
+            if (array[CountingLine + index, CountingColumn - 1] == null)
                 result.Point = false;
             else result.Point = true;
             return result;
         }
 
-        private Excel.Range findLeftTopCell()
+        private Cell findLeftTopCell()
         {
+            Cell result;
             int lineIndex = 1, columnIndex = 1;
             for (lineIndex = 1; ; lineIndex++)
             {
                 for (columnIndex = 1; columnIndex <= 5; columnIndex++)
                 {
-                    if (TempImportExcel.Cells[lineIndex, columnIndex].Text.Trim() == "1")
-                        return TempImportExcel.Cells[lineIndex, columnIndex];
+                    if (array[lineIndex, columnIndex] != null
+                        && array[lineIndex, columnIndex].ToString().Trim() == "1")
+                    {
+                        result.Row = lineIndex;
+                        result.Column = columnIndex;
+                        return result;
+                    }
                 }
             }
         }

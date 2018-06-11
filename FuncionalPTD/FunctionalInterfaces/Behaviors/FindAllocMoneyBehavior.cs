@@ -18,6 +18,6 @@ namespace FuncionalPTD.FunctionalInterfaces.Behaviors
         /// <param name="path"></param>
         /// <param name="workTitle"></param>
         /// <returns></returns>
-        decimal FindAllocMoney(Excel.Application TempImportExcel, int index);
+        decimal FindAllocMoney(object[,] array, int index);
     }
 }

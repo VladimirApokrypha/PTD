@@ -75,3 +75,14 @@ C:\Users\Владимир\Desktop\проект\PTD-master4\DomainPTD\bin\Debug\E
 C:\Users\Владимир\Desktop\проект\PTD-master4\DomainPTD\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Владимир\Desktop\проект\PTD-master4\DomainPTD\bin\Debug\EntityFramework.xml
 C:\Users\Владимир\Desktop\проект\PTD-master4\DomainPTD\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Владимир\Desktop\PTD-master\DomainPTD\bin\Debug\DomainPTD.dll.config
+C:\Users\Владимир\Desktop\PTD-master\DomainPTD\bin\Debug\DomainPTD.dll
+C:\Users\Владимир\Desktop\PTD-master\DomainPTD\bin\Debug\DomainPTD.pdb
+C:\Users\Владимир\Desktop\PTD-master\DomainPTD\bin\Debug\EntityFramework.dll
+C:\Users\Владимир\Desktop\PTD-master\DomainPTD\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Владимир\Desktop\PTD-master\DomainPTD\bin\Debug\EntityFramework.xml
+C:\Users\Владимир\Desktop\PTD-master\DomainPTD\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Владимир\Desktop\PTD-master\DomainPTD\obj\Debug\DomainPTD.csprojResolveAssemblyReference.cache
+C:\Users\Владимир\Desktop\PTD-master\DomainPTD\obj\Debug\DomainPTD.csproj.CoreCompileInputs.cache
+C:\Users\Владимир\Desktop\PTD-master\DomainPTD\obj\Debug\DomainPTD.dll
+C:\Users\Владимир\Desktop\PTD-master\DomainPTD\obj\Debug\DomainPTD.pdb
