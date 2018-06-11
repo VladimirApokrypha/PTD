@@ -198,6 +198,27 @@ namespace FuncionalPTD.FunctionalClasses
                     }
                     sum = 0;
                 }
+
+                decimal resultContrSum = contrWork.WorkList[i].AllocMoney - prevContrSum;
+                array[i + coutingLine, coutingColumn++] = resultContrSum;
+                for (int j = 0; j < subcontrWorks.Count; j++, coutingColumn++)
+                {
+                    for (int k = 0; k < subcontrWorks[j].WorkList.Count; k++)
+                    {
+                        Work work = subcontrWorks[j].WorkList.Find
+                                (x => x.Title.Title == contrWork.WorkList[i].Title.Title);
+                        if (work != null)
+                        {
+                            array[i + coutingLine, coutingColumn] = work.AllocMoney - prevSubcontrSum[j];
+                            sum += work.AllocMoney - prevSubcontrSum[j];
+                        }
+                    }
+                }
+
+                if (sum != 0) array[i + coutingLine, coutingColumn] = sum;
+                array[i + coutingLine, coutingColumn + 1] = resultContrSum - sum;
+                coutingColumn += 2;
+
                 prevContrSum = 0;
                 coutingColumn = 2;
                 coutingLine = 17;
@@ -324,7 +345,6 @@ namespace FuncionalPTD.FunctionalClasses
                     h = h - 3 - subcontrWorks.Count;
                     year++;
                     ExcelCapForWork(h, "Итого ЗАКРЫТО ГП за " + contrWork.WorkList[0].PeriodList[i - 1].Date.Year.ToString(), "Итого закрыто СП за " + contrWork.WorkList[0].PeriodList[i - 1].Date.Year, "Разница стоимости закрытого объема (ГП – СП) за " + contrWork.WorkList[0].PeriodList[i - 1].Date.Year, "Итого закрыто ", TempImportExcel, TempWorkSheet, range, subcontrWorks);
-                    z--;
                     i--;
                 }
                 LastColumn = h;
