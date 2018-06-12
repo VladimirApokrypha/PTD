@@ -86,3 +86,4 @@ C:\Users\Владимир\Desktop\PTD-master\DomainPTD\obj\Debug\DomainPTD.cspro
 C:\Users\Владимир\Desktop\PTD-master\DomainPTD\obj\Debug\DomainPTD.csproj.CoreCompileInputs.cache
 C:\Users\Владимир\Desktop\PTD-master\DomainPTD\obj\Debug\DomainPTD.dll
 C:\Users\Владимир\Desktop\PTD-master\DomainPTD\obj\Debug\DomainPTD.pdb
+C:\Users\Владимир\Desktop\PTD-master\DomainPTD\bin\Debug\CommonServiceLocator.dll

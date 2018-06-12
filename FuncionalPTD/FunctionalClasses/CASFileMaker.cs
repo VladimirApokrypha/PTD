@@ -94,7 +94,6 @@ namespace FuncionalPTD.FunctionalClasses
             TempImportExcel.Application.Workbooks.Add(1);
             Excel.Worksheet TempWorkSheet = TempWoorkBook.Worksheets.get_Item(1);
             TempImportExcel.DisplayAlerts = false;
-            //TempImportExcel.Visible = true;
 
             Excel.Range range;
             object[,] array = new object[contrWork.WorkList.Count + 20, contrWork.WorkList[1].PeriodList.Count * (subcontrWorks.Count + 3) * 6];
@@ -129,6 +128,7 @@ namespace FuncionalPTD.FunctionalClasses
                     temp.Font.Italic = true;
                     temp.HorizontalAlignment = Excel.Constants.xlRight;
                     temp.WrapText = true;
+                    temp.RowHeight = 0;
                 }
 
                 coutingColumn++;

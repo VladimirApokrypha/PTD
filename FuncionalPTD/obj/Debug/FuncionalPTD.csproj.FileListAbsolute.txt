@@ -177,3 +177,14 @@ C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\obj\Debug\FuncionalPTD
 C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\obj\Debug\FuncionalPTD.csproj.CoreCompileInputs.cache
 C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\obj\Debug\FuncionalPTD.dll
 C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\obj\Debug\FuncionalPTD.pdb
+C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\bin\Debug\CommonServiceLocator.dll
+C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\bin\Debug\GalaSoft.MvvmLight.dll
+C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\bin\Debug\GalaSoft.MvvmLight.Extras.dll
+C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\bin\Debug\GalaSoft.MvvmLight.Platform.dll
+C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\bin\Debug\GalaSoft.MvvmLight.pdb
+C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\bin\Debug\GalaSoft.MvvmLight.xml
+C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\bin\Debug\GalaSoft.MvvmLight.Extras.pdb
+C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\bin\Debug\GalaSoft.MvvmLight.Extras.xml
+C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\bin\Debug\GalaSoft.MvvmLight.Platform.pdb
+C:\Users\Владимир\Desktop\PTD-master\FuncionalPTD\bin\Debug\GalaSoft.MvvmLight.Platform.xml

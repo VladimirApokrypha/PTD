@@ -1,0 +1,81 @@
+﻿<Window
+        x:Class="DogsViewModel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DogsViewModel"
+        mc:Ignorable="d"
+        Title="Dogs Main Window " Height="340" Width="575" MinHeight="340" MaxHeight="340" MaxWidth="575" MinWidth="575" ResizeMode="CanMinimize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="Button1" Content="Generate report" Height="35" Width="172" Grid.Row="3" Margin="0,10,0,10" VerticalContentAlignment="Center" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="Button1_Click"/>
+        <Button x:Name="Button2" Content="Add contractor file" HorizontalAlignment="Center" Height="35" VerticalAlignment="Center" Width="172" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,60,0,10" Click="Button2_Click" Grid.Column="0"/>
+        <Button x:Name="Button3" Content="Add subcontractor file" HorizontalAlignment="Center" Height="35" VerticalAlignment="Center" Width="172" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,10,0,10" Click="Button3_Click" Grid.Column="0"/>
+        <Button x:Name="Button1Vis" Content="Generate report" Height="35" Width="172" Grid.Row="3" Margin="0,0,0,30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Visibility="Collapsed"/>
+        <Button x:Name="Button2Vis" Content="Add contractor file" HorizontalAlignment="Center" Height="35" VerticalAlignment="Center" Width="172" Grid.Row="1" Margin="0,30,0,0" Click="Button2_Click" Grid.Column="0" Visibility="Collapsed"/>
+        <Button x:Name="Button3Vis" Content="Add subcontractor file" HorizontalAlignment="Center" Height="35" VerticalAlignment="Center" Width="172" Grid.Row="2" Margin="0,0,0,0" Click="Button3_Click" Grid.Column="0" Visibility="Collapsed"/>
+        <Menu Height="20" VerticalAlignment="Top" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Width="575">
+            <MenuItem Header="Project">
+                <MenuItem.Icon>
+                    <Image Source="DogsViewModel/DogsViewModel/Images/aryouqspvfpdlenizcfp.png" Height="15" Width="15"/>
+                </MenuItem.Icon>
+                <MenuItem x:Name="NewProjectButton" Header="New project" Click="NewProjectButton_OnClick" >
+                </MenuItem>
+                <MenuItem x:Name="OpenProjectButton" Header="Open project" Click="OpenProjectButton_Click" >
+                </MenuItem>
+                <Separator />
+                <MenuItem x:Name="ExitButton" Header="Exit" Click="ExitButton_Click" ></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Root directory">
+                <MenuItem.Icon>
+                    <Image Source="DogsViewModel/DogsViewModel/Images/5b9c31c3ecf9e5afa33e837330dce277.png" Height="12" Width="12"/>
+                </MenuItem.Icon>
+                <MenuItem x:Name="NewDirectoryButton" Header="New directory" Click="NewDirectoryButton_OnClick"></MenuItem>
+                <MenuItem x:Name="OpenDirectoryButton" Header="Open directory" Click="OpenDirectoryButton_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="ProjectTreeButton" Header="Project tree" Click="ProjectTreeButton_Click">
+                <MenuItem.Icon>
+                    <Image Source="DogsViewModel/DogsViewModel/Images/GetFile.png" Height="12" Width="13"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem x:Name="Marks" Header="Marks" Click="Marks_Click">
+                <MenuItem.Icon>
+                    <Image Source="DogsViewModel/DogsViewModel/Images/img_356975.png" Width="13" Height="12"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem x:Name="Help" Header="Help" Click="Help_Click">
+                <MenuItem.Icon>
+                    <Image Source="DogsViewModel/DogsViewModel/Images/img_452494.png" Width="13" Height="12"/>
+                </MenuItem.Icon>
+            </MenuItem>
+        </Menu>
+        <TreeView x:Name="TreeOfProject" Grid.Row="1" Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" Height="250" Margin="0,20,0,0" Grid.Column="1" Grid.RowSpan="3" Visibility="Collapsed">
+            <TreeViewItem Header="Fruit">
+                <TreeViewItem Header="Lime"></TreeViewItem>
+                <TreeViewItem Header="Orange"></TreeViewItem>
+                <TreeViewItem Header="Apple"></TreeViewItem>
+            </TreeViewItem>
+            <TreeViewItem Header="Colors">
+                <TreeViewItem Header="Red"></TreeViewItem>
+                <TreeViewItem Header="Orange"></TreeViewItem>
+                <TreeViewItem Header="Green"></TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                <GradientStop Color="Black"/>
+                <GradientStop Color="#FF309E53" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+    </Grid>
+</Window>

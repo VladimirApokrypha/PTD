@@ -24,12 +24,15 @@ namespace FuncionalPTD.FunctionalClasses
         {
             Serializer serializer = new Serializer();
             FileManager manager = (FileManager)serializer.DeserializeObject(SerializeFile);
-            CurrentReportPath = manager.CurrentReportPath;
-            ReportPath = manager.ReportPath;
-            CurrentResourcesPath = manager.CurrentResourcesPath;
-            Contractor = manager.Contractor;
-            Subcontractors = manager.Subcontractors;
-            Labels = manager.Labels;
+            if (manager != null)
+            {
+                CurrentReportPath = manager.CurrentReportPath;
+                ReportPath = manager.ReportPath;
+                CurrentResourcesPath = manager.CurrentResourcesPath;
+                Contractor = manager.Contractor;
+                Subcontractors = manager.Subcontractors;
+                Labels = manager.Labels;
+            }
         }
 
         private const string ContractorFolderName = "Генподрядчик";
@@ -97,17 +100,13 @@ namespace FuncionalPTD.FunctionalClasses
         public void OpenLastProject()
         {
             Serializer serializer = new Serializer();
-            FileManager manager = (FileManager)serializer.DeserializeObject(SerializeFile);
+            FileManager manager = (FileManager)serializer.DeserializeObject(
+                Path.Combine(CurrentReportPath, ReportPath, ResourcesFolderName, SerializeFile));
             CurrentReportPath = manager.CurrentReportPath;
             ReportPath = manager.ReportPath;
             CurrentResourcesPath = manager.CurrentResourcesPath;
             Contractor = manager.Contractor;
             Subcontractors = manager.Subcontractors;
-        }
-
-        public void OpenProject(string title)
-        {
-            ReportPath = title;
         }
 
         /// <summary>
@@ -123,21 +122,21 @@ namespace FuncionalPTD.FunctionalClasses
             Directory.CreateDirectory(Path.Combine(ReportPath, ResourcesFolderName));
         }
 
-        //public void OpenProject(string name)
-        //{
-        //    ReportPath = Path.Combine(CurrentReportPath, name);
+        public void OpenProject(string name)
+        {
+            ReportPath = Path.Combine(CurrentReportPath, name);
 
-        //    DirectoryInfo contrInfo = new DirectoryInfo(Path.Combine(ReportPath, ContractorFolderName));
-        //    FileInfo[] contr = contrInfo.GetFiles();
-        //    Contractor.Path = Path.Combine(ReportPath, ContractorFolderName, contr[0].Name);
+            DirectoryInfo contrInfo = new DirectoryInfo(Path.Combine(ReportPath, ContractorFolderName));
+            FileInfo[] contr = contrInfo.GetFiles();
+            Contractor.Path = Path.Combine(ReportPath, ContractorFolderName, contr[0].Name);
 
-        //    DirectoryInfo subcontrInfo = new DirectoryInfo(Path.Combine(ReportPath, SubcontractorFolderName));
-        //    foreach (FileInfo temp in subcontrInfo.GetFiles())
-        //    {
-        //        Subcontractors.Add(new SubcontrWorkFile()
-        //        { Path = Path.Combine(ReportPath, SubcontractorFolderName, temp.Name) });
-        //    }
-        //}
+            DirectoryInfo subcontrInfo = new DirectoryInfo(Path.Combine(ReportPath, SubcontractorFolderName));
+            foreach (FileInfo temp in subcontrInfo.GetFiles())
+            {
+                Subcontractors.Add(new SubcontrWorkFile()
+                { Path = Path.Combine(ReportPath, SubcontractorFolderName, temp.Name) });
+            }
+        }
 
         /// <summary>
         /// метод добавляет нового генподрядчика по указанному пути или создает в случае его отсутствия
@@ -227,7 +226,7 @@ namespace FuncionalPTD.FunctionalClasses
         public void Serialize()
         {
             Serializer serializer = new Serializer();
-            serializer.SerializeObject(SerializeFile, this);
+            serializer.SerializeObject(Path.Combine(CurrentReportPath,ReportPath, ResourcesFolderName, SerializeFile), this);
         }
     }
 }

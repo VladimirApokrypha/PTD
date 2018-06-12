@@ -40,7 +40,6 @@ namespace FuncionalPTD.FunctionalClasses
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                Console.ReadKey();
             }
             return objToSerialize;
         }
